@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function UsersList() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/users')
-      .then(response => {
-        setUsers(response.data);
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(data => {
+        setUsers(data);
         setLoading(false);
       })
       .catch(error => {
@@ -28,7 +28,7 @@ function UsersList() {
       {users.map(user => (
         <div key={user.id}>
           <p>{user.name}</p>
-          <NavLink to={`/albums/${user.id}`}>Альбом</NavLink>
+          <Link to={`/albums/${user.id}`}>Альбом</Link>
         </div>
       ))}
     </div>

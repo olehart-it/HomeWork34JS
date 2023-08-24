@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 
 function PhotosList() {
   const { albumId } = useParams();
@@ -8,9 +7,10 @@ function PhotosList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
-      .then(response => {
-        setPhotos(response.data);
+    fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
+      .then(response => response.json())
+      .then(data => {
+        setPhotos(data);
         setLoading(false);
       })
       .catch(error => {
